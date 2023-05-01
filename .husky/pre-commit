@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run format
+npm.cmd run format
 
-npm run lint
+npm.cmd run lint
 
-npm run test:cov
+npm.cmd run test:cov
 
