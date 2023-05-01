@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  finances-as-api:
+    image: finances-as-api
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    command: npm run start:dev
+    networks:
+      - sqldatabase
+    depends_on:
+      - redis
+      - postgres
+  redis: # Name of container
+    image: redis
+    ports:
+      - 8889:6379
+    volumes:
+      - redis:/data
+  postgres:
+    image: postgres
+    ports:
+      - 8888:5432
+    restart: always
+    environment:
+      POSTGRES_DB: finance-as
+      POSTGRES_USER: finance-as
+      POSTGRES_PASSWORD: fin@nc3-As
+    networks:
+      - sqldatabase
+
+networks:
+  sqldatabase:
+    driver: bridge
+
+volumes:
+  redis:
+    driver: local
+    
+  
